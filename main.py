@@ -65,9 +65,18 @@ class TopSpinGUI:
         self.draw_tokens()
 
     def reverse_spinner(self):
-        # Reverse the tokens in the spinner range
+         # Calculate the end index, considering wrap-around
         end = self.spinner_start + self.spinner_size
-        self.tokens[self.spinner_start:end] = reversed(self.tokens[self.spinner_start:end])
+        if end <= len(self.tokens):
+            # If no wrap-around, reverse normally
+            self.tokens[self.spinner_start:end] = reversed(self.tokens[self.spinner_start:end])
+        else:
+            # Handle wrap-around by reversing in two parts
+            part1 = self.tokens[self.spinner_start:]  # Tokens from spinner_start to the end
+            part2 = self.tokens[:end % len(self.tokens)]  # Tokens from the beginning to wrap-around index
+            reversed_section = list(reversed(part1 + part2))  # Combine and reverse both parts
+            self.tokens[self.spinner_start:] = reversed_section[:len(part1)]  # Update part1
+            self.tokens[:end % len(self.tokens)] = reversed_section[len(part1):]  # Update part2
         self.draw_tokens()
 
     def move_spinner_left(self):
