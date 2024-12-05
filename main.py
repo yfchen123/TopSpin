@@ -1,58 +1,108 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, font
 import math  # Import the math module for trigonometric functions
 
 class TopSpinGUI:
     def __init__(self, master):
         self.master = master
         self.master.title("TopSpin Game")
-
-        # Initialize game state with 20 tokens
-        self.tokens = list(range(1, 21))  # Start with 20 numbers
-        self.spinner_size = 4  # Spinner covers 4 numbers
-        self.spinner_start = 0  # Initial spinner position
-
-        # Create UI elements
-        self.canvas = tk.Canvas(self.master, width=500, height=500)  # Increase canvas size for 20 tokens
+        
+        self.canvas = tk.Canvas(self.master, width=500, height=500)
         self.canvas.pack()
 
+        self.button_frame = tk.Frame(self.master)
+        self.button_frame.pack(pady=20)
+
+        self.font = ('Arial', 12)
+
+        self.tokens = list(range(1, 21))
+        self.spinner_start = 0
+        self.spinner_size = 4
+        
+        # Set the initial theme
+        self.is_dark_mode = True  # Default to dark mode
+        self.set_theme()
+        
+        # Add the theme toggle button
+        self.create_button(self.button_frame, "Toggle Dark/Light Mode", self.toggle_theme, self.button_bg)
+        
+        # Create the action buttons
+        self.create_button(self.button_frame, "Rotate Left", self.rotate_left, self.button_bg)
+        self.create_button(self.button_frame, "Rotate Right", self.rotate_right, self.button_bg)
+        self.create_button(self.button_frame, "Reverse Spinner", self.reverse_spinner, self.button_bg)
+        self.create_button(self.button_frame, "Move Spinner Left", self.move_spinner_left, self.button_bg)
+        self.create_button(self.button_frame, "Move Spinner Right", self.move_spinner_right, self.button_bg)
+        
+        # Initial draw of the tokens
         self.draw_tokens()
 
-        self.rotate_left_button = tk.Button(self.master, text="Rotate Left", command=self.rotate_left)
-        self.rotate_left_button.pack(side=tk.LEFT)
+    def set_theme(self):
+        if self.is_dark_mode:
+            self.master.configure(bg="#121212")  # Dark background
+            self.canvas.configure(bg="#1e1e1e", highlightbackground="#333333")  # Dark canvas
+            self.button_bg = "#333333"
+            self.button_fg = "#FFFFFF"
+            self.highlight_color = "#BB86FC"  # Purple
+            self.default_token_color = "#424242"  # Dark gray
+            self.text_color = "#FFFFFF"
+        else:
+            self.master.configure(bg="#f0f0f0")  # Light background
+            self.canvas.configure(bg="#FFFFFF", highlightbackground="#cccccc")  # Light canvas
+            self.button_bg = "#e0e0e0"
+            self.button_fg = "#000000"
+            self.highlight_color = "#FFC107"  # Yellow
+            self.default_token_color = "#90CAF9"  # Light blue
+            self.text_color = "#000000"
 
-        self.rotate_right_button = tk.Button(self.master, text="Rotate Right", command=self.rotate_right)
-        self.rotate_right_button.pack(side=tk.LEFT)
+        # Update button styles dynamically
+        for button in self.button_frame.winfo_children():
+            button.configure(bg=self.button_bg, fg=self.button_fg)
 
-        self.reverse_button = tk.Button(self.master, text="Reverse Spinner", command=self.reverse_spinner)
-        self.reverse_button.pack(side=tk.LEFT)
-
-        self.spinner_left_button = tk.Button(self.master, text="Move Spinner Left", command=self.move_spinner_left)
-        self.spinner_left_button.pack(side=tk.LEFT)
-
-        self.spinner_right_button = tk.Button(self.master, text="Move Spinner Right", command=self.move_spinner_right)
-        self.spinner_right_button.pack(side=tk.LEFT)
+        self.draw_tokens()
+    
+    def toggle_theme(self):
+        self.is_dark_mode = not self.is_dark_mode
+        self.set_theme()
 
     def draw_tokens(self):
         self.canvas.delete("all")
-        center_x, center_y = 250, 250  # Adjust center to fit larger canvas
-        radius = 200  # Increase radius to fit more tokens
-        angle_step = 360 / len(self.tokens)  # Adjust angle step dynamically
+        center_x, center_y = 250, 250
+        radius = 200
+        angle_step = 360 / len(self.tokens)
 
         for i, token in enumerate(self.tokens):
             angle = i * angle_step
             x = center_x + radius * math.cos(angle * math.pi / 180)
             y = center_y + radius * math.sin(angle * math.pi / 180)
 
-            # Highlight tokens in spinner range
+            # Determine colors
             if (self.spinner_start <= i < self.spinner_start + self.spinner_size) or \
             (self.spinner_start + self.spinner_size > len(self.tokens) and i < (self.spinner_start + self.spinner_size) % len(self.tokens)):
-                fill_color = "lightgreen"  # Highlighted color for spinner range
+                fill_color = self.highlight_color  # Highlighted spinner color
+                outline_color = "white" if self.is_dark_mode else "black"
             else:
-                fill_color = "lightblue"   # Default color
+                fill_color = self.default_token_color  # Default token color
+                outline_color = self.canvas["bg"]  # Match canvas background
 
-            self.canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill=fill_color)
-            self.canvas.create_text(x, y, text=str(token))
+            # Draw tokens with borders
+            self.canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill=fill_color, outline=outline_color, width=3)
+            self.canvas.create_text(x, y, text=str(token), font=self.font, fill=self.text_color)
+    
+    def create_button(self, parent, text, command, color):
+        button = tk.Button(
+            parent, 
+            text=text, 
+            command=command, 
+            bg=color, 
+            fg="white", 
+            font=self.font, 
+            activebackground="#e0e0e0", 
+            activeforeground="black", 
+            pady=5, 
+            padx=10, 
+            bd=0
+        )
+        button.pack(side=tk.LEFT, padx=5)
 
     def rotate_left(self):
         self.tokens = self.tokens[1:] + [self.tokens[0]]
