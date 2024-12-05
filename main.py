@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox, font
-import math  # Import the math module for trigonometric functions
+import math
+import random
 
 class TopSpinGUI:
     def __init__(self, master):
@@ -33,6 +34,9 @@ class TopSpinGUI:
         self.create_button(self.button_frame, "Move Spinner Left", self.move_spinner_left, self.button_bg)
         self.create_button(self.button_frame, "Move Spinner Right", self.move_spinner_right, self.button_bg)
         
+        # Initialize and generate a solvable random configuration
+        self.generate_solvable_configuration()
+
         # Initial draw of the tokens
         self.draw_tokens()
 
@@ -59,7 +63,7 @@ class TopSpinGUI:
             button.configure(bg=self.button_bg, fg=self.button_fg)
 
         self.draw_tokens()
-    
+
     def toggle_theme(self):
         self.is_dark_mode = not self.is_dark_mode
         self.set_theme()
@@ -87,7 +91,7 @@ class TopSpinGUI:
             # Draw tokens with borders
             self.canvas.create_oval(x - 20, y - 20, x + 20, y + 20, fill=fill_color, outline=outline_color, width=3)
             self.canvas.create_text(x, y, text=str(token), font=self.font, fill=self.text_color)
-    
+
     def create_button(self, parent, text, command, color):
         button = tk.Button(
             parent, 
@@ -138,6 +142,21 @@ class TopSpinGUI:
         # Move spinner position right (clockwise)
         self.spinner_start = (self.spinner_start + 1) % len(self.tokens)
         self.draw_tokens()
+
+    def generate_solvable_configuration(self):
+        # Start with the goal configuration
+        current_configuration = self.tokens[:]
+        
+        # Perform an even number of swaps to generate a solvable configuration
+        for _ in range(random.randint(1, 5)):  # Perform 1 to 5 even swaps
+            i, j = random.sample(range(len(self.tokens)), 2)
+            # Swap i and j
+            current_configuration[i], current_configuration[j] = current_configuration[j], current_configuration[i]
+            # Perform another swap to maintain even parity
+            i, j = random.sample(range(len(self.tokens)), 2)
+            current_configuration[i], current_configuration[j] = current_configuration[j], current_configuration[i]
+        
+        self.tokens = current_configuration
 
 if __name__ == "__main__":
     root = tk.Tk()
