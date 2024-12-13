@@ -2,7 +2,7 @@
 Authors:
 
 Yun Fei Chen (yfc9)
-Braden Takashima> <btakashi
+Braden Takashima btakashi
 <Insert Name here> <Insert email here>
 
 # Introduction
