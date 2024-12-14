@@ -21,39 +21,28 @@ class game:
 
 def createPDB(numbers_to_check, size):
     number_of_numbers = len(numbers_to_check)
-    dimensions = (size,) *number_of_numbers
-    pdb = np.zeros(dimensions)
+    pdb = dict()
     EntriesToBe = perm(size, number_of_numbers)#checks the current number of entries that are to exist once the PDB has finished being made.
     currentEntries = 0
     queue = q.Queue()
-    queue.put()
+    queue.put(([*range(2, size+1)],[]))
     #perfrom Breadth first search
+    while currentEntries < EntriesToBe:
+        (current, path) = queue.get()
+        pdbIndex = []
+        for num in number_of_numbers:#gets the current location in the state where each of the elements to find are
+            pdbIndex.append(current.index(num)+1)
+        if not pdbIndex in pdb:#if the entry does not yet exist in the pdb
+            pdb[pdbIndex] = path
+            currentEntries += 1
+            #TODO create children
+            
+            
+            
+        
     
     
     
     #print(pdb)
     #print (EntriesToBe)
-    
-    
-    
-    
-    
-def BFS():
-    
-    
-        
-    """ def rotate(self, index):
-        if index>= self.N:
-            raise IndexError("out of bounds")
-        if index + self.K > self.N:
-            reversed_list = self.board_state[:]
-            reversed_list[index:index+self.K] = reversed(self.board_state[index:index+self.K])
-        else:
-            if list reversed  
- """
-
-
-          
-    
-    
     
