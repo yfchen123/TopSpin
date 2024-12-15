@@ -18,14 +18,16 @@ class game:
 #performs a breadth first search to and checks if its current formation is in the PDB or not. If it isn't it will add its current path to the table, then create offspring.
 #if it already in the matrix then the branch is pruned and will not create children.
 # 1 is considered the first point no matter what
+#numbers_to_check: a list of the numbers that will be checked for the pdb
+#size: number value for size of spinner
 
-def createPDB(numbers_to_check, size):
-    number_of_numbers = len(numbers_to_check)
+def createPDB(pdb_numbers, N, K):
+    number_of_numbers = len(pdb_numbers)
     pdb = dict()
-    EntriesToBe = perm(size, number_of_numbers)#checks the current number of entries that are to exist once the PDB has finished being made.
+    EntriesToBe = perm(N, number_of_numbers)#checks the current number of entries that are to exist once the PDB has finished being made.
     currentEntries = 0
     queue = q.Queue()
-    queue.put(([*range(2, size+1)],[]))
+    queue.put(([*range(2, N+1)],[]))
     #perfrom Breadth first search
     while currentEntries < EntriesToBe:
         (current, path) = queue.get()
@@ -39,11 +41,8 @@ def createPDB(numbers_to_check, size):
             #
             #create children that need to wrap around.
             
-            for i in range(2, size - k+1):
-                newState = current
-                queue.put(([],path.append(i)))
-                
-                
+            for i in range(2, N - K+2):
+                queue.put((insideRotate(current, i, K)),path+[i])
             #Create children that don't need to wrap around
 #returns a list representing a state with a single slip starting with the position at index as the left most in the flip
 #takes a list state [], 
@@ -51,12 +50,15 @@ def createPDB(numbers_to_check, size):
 #k is the number of pegs to be flipped
 #assumes it has been fed values that do not break the rule
 def insideRotate(list, index, k):
+    if (index <= 1 or index+k-2 > len(list)):
+        raise Exception("Improper index, not an inside rotate")
     ret = list[:index-2]
     temp = list[index-2:index-2+k]
     temp.reverse()
     ret.extend(temp)
     ret.extend(list[index-2+k:])
     return ret
+#def outsideRotate(list, index, k)
                 
             
         
