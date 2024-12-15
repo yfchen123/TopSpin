@@ -36,8 +36,28 @@ def createPDB(numbers_to_check, size):
             pdb[pdbIndex] = path
             currentEntries += 1
             #TODO create children
+            #
+            #create children that need to wrap around.
             
-            
+            for i in range(2, size - k+1):
+                newState = current
+                queue.put(([],path.append(i)))
+                
+                
+            #Create children that don't need to wrap around
+#returns a list representing a state with a single slip starting with the position at index as the left most in the flip
+#takes a list state [], 
+#the index is the left most position in the range to be flipped. (the first index in the list would be at index value 2)
+#k is the number of pegs to be flipped
+#assumes it has been fed values that do not break the rule
+def insideRotate(list, index, k):
+    ret = list[:index-2]
+    temp = list[index-2:index-2+k]
+    temp.reverse()
+    ret.extend(temp)
+    ret.extend(list[index-2+k:])
+    return ret
+                
             
         
     
