@@ -7,8 +7,9 @@ import queue as q
 #performs a breadth first search to and checks if its current formation is in the PDB or not. If it isn't it will add its current path to the table, then create offspring.
 #if it already in the matrix then the branch is pruned and will not create children.
 # 1 is considered the first point no matter what
-#numbers_to_check: a list of the numbers that will be checked for the pdb
-#size: number value for size of spinner
+#pdb_numbers: a list of the numbers that will be checked for the pdb
+#N: number of pegs
+#K: number value for size of spinner
 
 def createPDB(pdb_numbers, N, K):
     number_of_numbers = len(pdb_numbers)
@@ -37,7 +38,13 @@ def createPDB(pdb_numbers, N, K):
             for i in range(N-K+2, N+1):
                 #print(i)
                 queue.put((outsideRotate(current, i, K),path+[i]))
-    print(pdb)        
+    print(pdb)      
+    
+    
+    
+    
+def astar_solver(list, K):
+    return 0
             
             
             
