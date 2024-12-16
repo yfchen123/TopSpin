@@ -2,17 +2,6 @@ import numpy as np
 from math import perm
 import queue as q
 
-class game:
-    board_state = [];
-    N = 0;
-    K = 0;
-    
-    def __init__(self, board_state, K = 4):
-        self.N = len(board_state)
-        self.K = K
-        self.board_state = board_state
-
-
 ###
 #Takes in a list of numbers and produces a pdb lookup table with instructions on how to move the given numbers to their correct position in the identity list in the best moves
 #performs a breadth first search to and checks if its current formation is in the PDB or not. If it isn't it will add its current path to the table, then create offspring.
@@ -92,4 +81,6 @@ def outsideRotate(list, index, K):
     ret = [*end_partition[::-1], *untouched_partition,*start_partition[::-1] ]
 
     return ret
+    
+    
     
