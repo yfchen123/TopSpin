@@ -1,4 +1,6 @@
 import game
+from game import insideRotate, outsideRotate
+
 list = [2,3,4,5,6,7,8, 9]
 #game.createPDB([1,2, 3, 4],16)
 index = 2
@@ -14,7 +16,15 @@ print(ret) """
                 
 #for i in range(2, N - K+2):
 #                print((game.insideRotate(list, i, K)),path+[i])
-""" for i in range(1, N+2):
-    game.outsideRotate(list, i, K) """
+
     #print("tester",i-2+K-len(list)-1)
-game.createPDB([2,3,6], 8, 4)    
+game.createPDB([2,3,6, 12], 20, 4)    
+""" for i in range(2, N - K+2):
+    print(i)
+    #create inside rotation children
+    print((insideRotate(list, i, K)))
+#Create children that don't need to wrap around (outside rotation)
+for i in range(N-K+2, N+1):
+    print(i)
+    print((outsideRotate(list, i, K)))
+ """

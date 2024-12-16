@@ -29,25 +29,26 @@ def createPDB(pdb_numbers, N, K):
     queue = q.Queue()
     queue.put(([*range(2, N+1)],[]))
     #perfrom Breadth first search
-    while currentEntries < EntriesToBe:
+    #while currentEntries < EntriesToBe:
+    while queue.empty() == False:
         (current, path) = queue.get()
         pdbIndex = []
         for num in pdb_numbers:#gets the current location in the state where each of the elements to find are
-            pdbIndex.append(current.index(num)+1)
-        if not pdbIndex in pdb:#if the entry does not yet exist in the pdb
-            pdb[pdbIndex] = path
+            pdbIndex.append(current.index(num)+2)
+        if not tuple(pdbIndex) in pdb:#if the entry does not yet exist in the pdb
+            pdb[tuple(pdbIndex)] = path
             currentEntries += 1
-            #TODO create children
-            #
             #create children that need to wrap around.
-            queue.put((outsideRotate(current, 1, K)),path+[1])
-            for i in range(2, N - K):
+            queue.put((outsideRotate(current, 1, K),path+[1]))
+            for i in range(2, N - K+2):
+                #print(i)
                 #create inside rotation children
-                queue.put((insideRotate(current, i, K)),path+[i])
+                queue.put((insideRotate(current, i, K),path+[i]))
             #Create children that don't need to wrap around (outside rotation)
-            for i in range(N-K, N+1):
-                queue.put((outsideRotate(current, i, K)),path+[i])
-            
+            for i in range(N-K+2, N+1):
+                #print(i)
+                queue.put((outsideRotate(current, i, K),path+[i]))
+    print(pdb)        
             
             
             
@@ -73,8 +74,8 @@ def insideRotate(list, index, K):
 def outsideRotate(list, index, K):
     #print(index)
     if not(index == 1 or (index-2 < len(list) and index-2+K > len(list))):
-        #raise("Improper index for an outside rotate")
-        return
+        raise("Improper index for an outside rotate")
+
     #steps, take the portion from the end to rotate
     if index == 1:
         return [*list[K-1:], *list[K-2::-1]]
