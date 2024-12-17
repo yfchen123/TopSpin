@@ -29,14 +29,11 @@ def createPDB(pdb_numbers, N, K):
             #create children that need to wrap around.
             queue.put((outsideRotate(current, 1, K),path+[1]))
             for i in range(2, N - K+2):
-                #print(i)
                 #create inside rotation children
                 queue.put((insideRotate(current, i, K),path+[i]))
             #Create children that don't need to wrap around (outside rotation)
             for i in range(N-K+2, N+1):
-                #print(i)
                 queue.put((outsideRotate(current, i, K),path+[i]))
-    #print(pdb)
     return pdb    
     
     
@@ -54,20 +51,17 @@ def astar_solver(list, K):
     
     while len(heap) > 0:
         (prio, path_length, state, path) = hq.heappop(heap)
-        #print(prio, path_length, state, path)
         if state == identity:
             print(path)
             return path
         else:
             checked.add(tuple(state))
-            #print(state)
             #populate children
             next_state = outsideRotate(state, 1, K)#swap on 1
             if not(tuple(next_state) in checked):
                 priority = calculate_breakpoints(state)/2 + path_length
                 hq.heappush(heap, (priority, path_length+1, next_state, path+[1]))
             for i in range(2, N - K+2):
-                #print(i)
                 #create inside rotation children
                 next_state = insideRotate(state, i, K)#inside swaps
                 if not(tuple(next_state) in checked):
@@ -75,7 +69,6 @@ def astar_solver(list, K):
                     hq.heappush(heap, (priority, path_length+1, next_state, path+[i]))
             #Create children that don't need to wrap around (outside rotation)
             for i in range(N-K+2, N+1):
-                #print(i)
                 next_state = outsideRotate(state, i, K)#inside swaps
                 if not(tuple(next_state) in checked):
                     priority = calculate_breakpoints(state)/2 + path_length
@@ -120,7 +113,7 @@ def insideRotate(list, index, K):
 
 
 def outsideRotate(list, index, K):
-    #print(index)
+
     if not(index == 1 or (index-2 < len(list) and index-2+K > len(list))):
         raise("Improper index for an outside rotate")
 
@@ -130,13 +123,10 @@ def outsideRotate(list, index, K):
     end_partition = list[index-2:]
     start_partition = []
     
-    #print("indexy thing is", index-2+K-len(list)-1 )
+
     if (index-2+K-len(list)-1) >= 0:
         start_partition = list[:index-3+K-len(list)]
     untouched_partition = list[index-3+K-len(list):index-2]
-    #print("untouched_partition", untouched_partition)
-   # print ("end_partition", end_partition)
-   # print("start_partition", start_partition)
     ret = [*end_partition[::-1], *untouched_partition,*start_partition[::-1] ]
 
     return ret
