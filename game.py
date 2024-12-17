@@ -38,15 +38,38 @@ def createPDB(pdb_numbers, N, K):
             for i in range(N-K+2, N+1):
                 #print(i)
                 queue.put((outsideRotate(current, i, K),path+[i]))
-    print(pdb)      
+    #print(pdb)
+    return pdb    
     
     
     
     
 def astar_solver(list, K):
+    identity = range(2,len(list)+2)
+    
+    
     return 0
+
+#takes a list of size n-1 with numbers in any permutation of numbers 2 to n and returns the number of breakpoints, list are in the same [2,3,4,5] type format without the 1 as is in 
+def calculate_breakpoints(list):
+    n = len(list)+1
+    breakpoint_count = 0
+    previous = list[0]
+    if previous != 2:
+        print("1 to 2 wrong")
+        breakpoint_count += 1
+    if n > 2:
+        if list[-1] != n:
+            print("last to 1 wrong")
+            breakpoint_count += 1
             
-            
+        for num in list[1:n-1]:
+            if num != previous+1:
+                print(previous, "to", num,  "wrong")
+                breakpoint_count += 1
+            previous = num
+    return breakpoint_count
+                
             
             
 #returns a list representing a state with a single slip starting with the position at index as the left most in the flip

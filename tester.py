@@ -18,7 +18,7 @@ print(ret) """
 #                print((game.insideRotate(list, i, K)),path+[i])
 
     #print("tester",i-2+K-len(list)-1)
-game.createPDB([2,3,6, 12], 20, 4)    
+#game.createPDB([2,3,6, 12], 20, 4)    
 """ for i in range(2, N - K+2):
     print(i)
     #create inside rotation children
@@ -28,3 +28,5 @@ for i in range(N-K+2, N+1):
     print(i)
     print((outsideRotate(list, i, K)))
  """
+ 
+print(game.calculate_breakpoints([5,2,3,4]))
