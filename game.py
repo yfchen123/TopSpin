@@ -62,6 +62,7 @@ def astar_solver(list, K):
             return path
         else:
             checked.add(tuple(state))
+            #print(state)
             #populate children
             next_state = outsideRotate(state, 1, K)#swap on 1
             if not(tuple(next_state) in checked):
@@ -146,7 +147,7 @@ def outsideRotate(list, index, K):
 #standardizes 1 to be the starting position in the set and then removes it from the list
 def format_sequence(list):
     ones_index = list.index(1)
-    return [*list[ones_index+1:]]
+    return [*list[ones_index+1:], *list[:ones_index]]
     
     
 if __name__ == "__main__":

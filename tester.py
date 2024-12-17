@@ -36,4 +36,6 @@ for i in range(N-K+2, N+1):
 #print([*range(2,len(list)+1)])
 #print([*range(2,len(list)+2)])
 #print(list)
-print(list)
+print(list[15:])
+ones_index = list.index(1)
+print([*list[ones_index+1:], *list[:ones_index]])
