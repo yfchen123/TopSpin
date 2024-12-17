@@ -12,9 +12,7 @@ import heapq as hq
 #K: number value for size of spinner
 
 def createPDB(pdb_numbers, N, K):
-    number_of_numbers = len(pdb_numbers)
     pdb = dict()
-    EntriesToBe = perm(N, number_of_numbers)#checks the current number of entries that are to exist once the PDB has finished being made.
     currentEntries = 0
     queue = q.Queue()
     queue.put(([*range(2, N+1)],[]))
