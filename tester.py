@@ -2,6 +2,8 @@ import game
 from game import insideRotate, outsideRotate
 
 list = [2,3,4,5,6,7,8, 9]
+list2 = [2,3,4,5,9,8,7,6]
+list3 = [6,13,17,3,4,15,9,14,20,5,12,11,18,10,7,16,19,2,8]
 #game.createPDB([1,2, 3, 4],16)
 index = 2
 K = 4
@@ -28,5 +30,10 @@ for i in range(N-K+2, N+1):
     print(i)
     print((outsideRotate(list, i, K)))
  """
- 
-print(game.calculate_breakpoints([5,2,3,4]))
+#print([*range(2,len(list)+2)] == list)
+#print(game.calculate_breakpoints([5,2,3,4]))
+#game.astar_solver(list3, 4)
+#print([*range(2,len(list)+1)])
+#print([*range(2,len(list)+2)])
+#print(list)
+print(list)
