@@ -4,7 +4,7 @@ Authors:
 Yun Fei Chen (yfc9)
 
 Braden Takashima btakashi
-<Insert Name here> <Insert email here>
+Snimer S Gill (ssg28)
 
 # Introduction
 The purpose of this project is to explore the effect of using different PDB algorithms on the TopSpin problem and to benchmark the performance of the various algorithms. For the puzzle we generated random solvable configurations. In TopSpin
