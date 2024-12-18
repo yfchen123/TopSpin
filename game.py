@@ -17,7 +17,6 @@ def createPDB(pdb_numbers, N, K):
     queue = q.Queue()
     queue.put(([*range(2, N+1)],[]))
     #perfrom Breadth first search
-    #while currentEntries < EntriesToBe:
     while queue.empty() == False:
         (current, path) = queue.get()
         pdbIndex = []
@@ -34,11 +33,13 @@ def createPDB(pdb_numbers, N, K):
             #Create children that don't need to wrap around (outside rotation)
             for i in range(N-K+2, N+1):
                 queue.put((outsideRotate(current, i, K),path+[i]))
+    #print(pdb)#uncomment this line if you would like to see the database after It's been made. 
     return pdb    
     
     
-    
-    
+#  This is an A* style solver for the top spin problem that uses half the number of breakpoints as it's heuristic.
+#  list: an input list of the configuration of the puzzle in format [2,3,4, ..., N]. Input must be normalized for 1 to be first position,then 1 removed.
+#   K= size of the spinner  
 def astar_solver(list, K):
     identity = [*range(2,len(list)+2)]
     print(identity)
