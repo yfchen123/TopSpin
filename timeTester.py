@@ -8,6 +8,6 @@ list6 = [ 9,10, 8, 7, 4, 5, 3, 6,11, 2]#terminates in 16 seconds
 list7 = [2,12, 5, 6,10, 7, 4, 3,11, 9, 8]
 list8 = [ 8, 5, 6, 7, 4, 9,10,11, 2, 3]
 start_time = time.time()
-#game.createPDB([2,3,6,10, 18], 20, 4)
-game.astar_solver(list6, 4)
+game.createPDB([2,3,6,9, 15], 22, 4)
+#game.astar_solver(list6, 4)
 print("--- %s seconds ---" % (time.time() - start_time))
