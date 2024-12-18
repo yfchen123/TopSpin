@@ -12,6 +12,9 @@ The purpose of this project is to explore the effect of using different PDB algo
 a configuration is solvable if the start configuration and the end configuration 
 have the same parities. The proof is demonstrated in the paper below: https://digitalrepository.salemstate.edu/bitstream/handle/20.500.13013/607/auto_convert.pdf?sequence=3. 
 
+#play yourself
+run the main.py file to try your hand at the puzzle on an N=20, K = 4 setup.
+
 
 #How to use game.py
 The tester.py and timeTester.py files contain example code.
